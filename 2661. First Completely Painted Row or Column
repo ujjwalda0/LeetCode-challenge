@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int firstCompleteIndex(vector<int>& arr, vector<vector<int>>& mat) {
+        int n = arr.size();
+        int row = mat.size(), col = mat[0].size();
+        int index = 0;
+        map<pair<char,int>, int> m1;
+        vector<pair<int,int>> pos(row*col+1);
+        for(int i=0;i<row;i++) {
+            for(int j=0;j<col;j++) {
+                pos[mat[i][j]] = {i, j};
+            }
+        }
+        while(index<=n) {
+            auto curr = pos[arr[index]];
+            int i = curr.first;
+            int j = curr.second;
+            m1[{'R',i}]++;
+            m1[{'C',j}]++;
+            if(m1[{'R',i}]==col || m1[{'C',j}]==row)
+                return index;
+            index++;
+        }
+        return -1;
+    }
+};
